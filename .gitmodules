@@ -1,0 +1,6 @@
+[submodule "FlexyBox.web"]
+	path = FlexyBox.web
+	url = https://github.com/siamaksh1367/FlexyBox.web.git
+[submodule "FlexyBox.api"]
+	path = FlexyBox.api
+	url = https://github.com/siamaksh1367/FlexyBox.api.git
