@@ -24,11 +24,11 @@ public record $CommandName$Command() : ICommand<$CommandName$Response>
 {
 }
 
-public sealed class $CommandName$CommandValidator() : AbstractValidator<$CommandName$Command>
+public sealed class $CommandName$CommandValidator : AbstractValidator<$CommandName$Command>
 {
 }
 
-public sealed class $CommandName$CommandHandler() : ICommandHandler<$CommandName$Command, $CommandName$Response>
+public sealed class $CommandName$CommandHandler : ICommandHandler<$CommandName$Command, $CommandName$Response>
 {
     public Task<$CommandName$Response> Handle($CommandName$Command request, CancellationToken cancellationToken)
     {
@@ -39,6 +39,14 @@ public sealed class $CommandName$CommandHandler() : ICommandHandler<$CommandName
 public class $CommandName$Response
 {
 }
+
+public class $CommandName$CommandMappingProfile : Profile
+    {
+        public $CommandName$CommandMappingProfile()
+        {
+           
+        }
+    }
 ]]>
     </Code>
   </Snippet>

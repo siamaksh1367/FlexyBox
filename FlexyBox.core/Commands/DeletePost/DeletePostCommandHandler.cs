@@ -1,12 +1,22 @@
 ﻿using FlexyBox.core.Shared;
+using FlexyBox.dal.Generic;
 
 namespace FlexyBox.core.Commands.DeletePost
 {
-    public class DeletePostCommandHandler : ICommandHandler<DeletePostCommand, DeletePostResponse>
+    public class DeletePostCommandHandler : ICommandHandler<DeletePostCommand, int>
     {
-        public Task<DeletePostResponse> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public DeletePostCommandHandler(IUnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            _unitOfWork = unitOfWork;
+        }
+        public async Task<int> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+        {
+            var category = await _unitOfWork.Posts.GetAsync(request.Id);
+            _unitOfWork.Posts.Remove(category);
+            await _unitOfWork.CompleteAsync();
+            return request.Id;
         }
     }
 }

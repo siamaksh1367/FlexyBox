@@ -7,7 +7,7 @@ namespace FlexyBox.dal.Generic
     public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _context;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public GenericRepository(DbContext context)
         {
@@ -20,7 +20,7 @@ namespace FlexyBox.dal.Generic
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _dbSet.ToListAsync();
         }

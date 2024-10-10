@@ -5,6 +5,7 @@ namespace FlexyBox.dal.Repositories.Interface
 {
     public interface IPostRepository : IGenericRepository<Post>
     {
+        Task<IEnumerable<Post>> GetAllPostsIncludingDetailsAsync();
     }
 
 }

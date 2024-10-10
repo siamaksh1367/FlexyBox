@@ -10,5 +10,14 @@ namespace FlexyBox.dal.Repositories.Implementation
         public PostRepository(DbContext context) : base(context)
         {
         }
+
+        public async Task<IEnumerable<Post>> GetAllPostsIncludingDetailsAsync()
+        {
+            return await _dbSet
+                .Include(x => x.Category)
+                .Include(x => x.Tags)
+                .Include(x => x.Comments)
+                .ToListAsync();
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace FlexyBox.dal.Generic
     public interface IGenericRepository<TEntity> where TEntity : class
     {
         Task<TEntity> GetAsync(int id);
-        Task<IEnumerable<TEntity>> GetAll();
+        Task<IEnumerable<TEntity>> GetAllAsync();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);

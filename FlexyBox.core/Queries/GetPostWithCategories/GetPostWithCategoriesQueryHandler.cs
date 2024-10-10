@@ -2,7 +2,7 @@
 
 namespace FlexyBox.core.Queries.GetPostWithCategories
 {
-    public sealed class GetPostWithCategoriesQueryHandler() : IQueryHandler<GetPostWithCategoriesQuery, GetPostWithCategoriesResponse>
+    public sealed class GetPostWithCategoriesQueryHandler : IQueryHandler<GetPostWithCategoriesQuery, GetPostWithCategoriesResponse>
     {
         public Task<GetPostWithCategoriesResponse> Handle(GetPostWithCategoriesQuery request, CancellationToken cancellationToken)
         {

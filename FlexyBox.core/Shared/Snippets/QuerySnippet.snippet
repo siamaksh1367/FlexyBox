@@ -24,11 +24,11 @@ public record $QueryName$Query() : IQuery<$QueryName$Response>
 {
 }
 
-public sealed class $QueryName$QueryValidator() : AbstractValidator<$QueryName$Query>
+public sealed class $QueryName$QueryValidator : AbstractValidator<$QueryName$Query>
 {
 }
 
-public sealed class $QueryName$QueryHandler() : IQueryHandler<$QueryName$Query, $QueryName$Response>
+public sealed class $QueryName$QueryHandler : IQueryHandler<$QueryName$Query, $QueryName$Response>
 {
     public Task<$QueryName$Response> Handle($QueryName$Query request, CancellationToken cancellationToken)
     {
@@ -39,6 +39,14 @@ public sealed class $QueryName$QueryHandler() : IQueryHandler<$QueryName$Query, 
 public class $QueryName$Response
 {
 }
+
+public class $QueryName$QueryMappingProfile : Profile
+    {
+        public $QueryName$QueryMappingProfile()
+        {
+           
+        }
+    }
 ]]>
     </Code>
   </Snippet>

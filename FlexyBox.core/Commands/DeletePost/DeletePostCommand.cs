@@ -2,7 +2,7 @@
 
 namespace FlexyBox.core.Commands.DeletePost
 {
-    public record DeletePostCommand() : ICommand<DeletePostResponse>
+    public record DeletePostCommand() : DeleteCommand
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace FlexyBox.core.Queries.GetPostsWithComments
 {
-    public sealed class GetPostWithCommentsQueryHandler() : IQueryHandler<GetPostWithCommentsQuery, GetPostWithCommentsResponse>
+    public sealed class GetPostWithCommentsQueryHandler : IQueryHandler<GetPostWithCommentsQuery, GetPostWithCommentsResponse>
     {
         public Task<GetPostWithCommentsResponse> Handle(GetPostWithCommentsQuery request, CancellationToken cancellationToken)
         {
