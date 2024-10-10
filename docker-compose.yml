@@ -35,8 +35,32 @@ services:
     volumes:
       - ./azurite:/data  
     command: "azurite -s --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0"
+    networks:
+      - app-network
     depends_on:
      - dev
+
+  api:
+    image: ${DOCKER_REGISTRY-}flexyboxapi
+    build:
+      context: .
+      dockerfile: FlexyBox.api/Dockerfile
+    depends_on:
+      - sqlserver
+      - azurite
+    environment:
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=mypass123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - SQLConnectionString__ConnectionString=Server=sqlserver,1433;Database=FlexyBoxDB;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True
+      - StorageConnectionString__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFe3fS4rZF8D58a5w==;BlobEndpoint=http://localhost:10000/devstoreaccount1;QueueEndpoint=http://localhost:10001/devstoreaccount1;TableEndpoint=http://localhost:10002/devstoreaccount1;
+      - Okta__Authority=https://dev-uct7p4or1fa0cwym.us.auth0.com/
+      - Okta__Audience=https://localhost:7204/
+    ports:
+      - "7132:8080"
+    volumes:
+      - ${USERPROFILE}/.aspnet/https:/https/
+    networks:
+      - app-network
 
 networks:
   app-network:
