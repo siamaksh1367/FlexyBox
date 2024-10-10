@@ -1,0 +1,31 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      SA_PASSWORD: "yourStrong(!)Password"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - app-network
+
+  dev:
+    build:
+      context: .
+      dockerfile: FlexyBox.dev/Dockerfile
+    environment:
+      - SQLConnectionString__ConnectionString=Server=sqlserver,1433;Database=FlexyBoxDB;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True
+    entrypoint: ["bash", "-c"]
+    command: >
+      "dotnet tool restore &&
+       dotnet ef database update --project FlexyBox.dev"
+    depends_on:
+      - sqlserver
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
