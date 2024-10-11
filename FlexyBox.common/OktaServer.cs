@@ -1,6 +1,6 @@
 ﻿namespace FlexyBox.common
 {
-    public class Okta
+    public class OktaServer
     {
         public string Authority { get; set; }
         public string Audience { get; set; }
