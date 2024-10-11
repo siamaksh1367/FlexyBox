@@ -5,8 +5,6 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexyBox.api", "FlexyBox.api\FlexyBox.api.csproj", "{DA9F9918-4D55-48C4-B522-D60801BB07F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexyBox.web", "FlexyBox.web\FlexyBox.web.csproj", "{A120D0D3-5EF3-4B7D-B4DC-A565F0E570FD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexyBox.core", "FlexyBox.core\FlexyBox.core.csproj", "{F3B6B979-F03F-4272-AC46-502DAB7D3A55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexyBox.dal", "FlexyBox.dal\FlexyBox.dal.csproj", "{D7E1BB35-3473-401F-BB52-8EA971BAB317}"
@@ -22,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexyBox.web", "FlexyBox.web\FlexyBox.web.csproj", "{2DBB0AF6-CE58-4740-B04E-EA2ADDD12BC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +32,6 @@ Global
 		{DA9F9918-4D55-48C4-B522-D60801BB07F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA9F9918-4D55-48C4-B522-D60801BB07F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA9F9918-4D55-48C4-B522-D60801BB07F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A120D0D3-5EF3-4B7D-B4DC-A565F0E570FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A120D0D3-5EF3-4B7D-B4DC-A565F0E570FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A120D0D3-5EF3-4B7D-B4DC-A565F0E570FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A120D0D3-5EF3-4B7D-B4DC-A565F0E570FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3B6B979-F03F-4272-AC46-502DAB7D3A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F3B6B979-F03F-4272-AC46-502DAB7D3A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3B6B979-F03F-4272-AC46-502DAB7D3A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,6 +52,10 @@ Global
 		{C33A8F29-0686-4F57-B050-290927DB6CC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C33A8F29-0686-4F57-B050-290927DB6CC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C33A8F29-0686-4F57-B050-290927DB6CC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DBB0AF6-CE58-4740-B04E-EA2ADDD12BC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DBB0AF6-CE58-4740-B04E-EA2ADDD12BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DBB0AF6-CE58-4740-B04E-EA2ADDD12BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DBB0AF6-CE58-4740-B04E-EA2ADDD12BC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

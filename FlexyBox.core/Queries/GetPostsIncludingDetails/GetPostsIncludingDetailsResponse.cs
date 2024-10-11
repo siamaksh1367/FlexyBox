@@ -1,4 +1,4 @@
-﻿namespace FlexyBox.core.Queries.GetPostsIncludingDetailsQ
+﻿namespace FlexyBox.core.Queries.GetPostsIncludingDetails
 {
     public class GetPostsIncludingDetailsResponse
     {
