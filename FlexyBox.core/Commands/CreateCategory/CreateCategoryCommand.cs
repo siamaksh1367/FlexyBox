@@ -1,10 +1,25 @@
 ﻿using AutoMapper;
 using FlexyBox.core.Shared;
 using FlexyBox.dal.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace FlexyBox.core.Commands.CreateCategory
 {
-    public record CreateCategoryCommand(string Name, string Description) : ICommand<CreateCategoryResponse>;
+    public class CreateCategoryCommand : ICommand<CreateCategoryResponse>
+    {
+        [Required(ErrorMessage = "Name is required.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Description is required.")]
+        public string Description { get; set; }
+
+        public CreateCategoryCommand(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
+    }
+
 
     public class CreateCategoryCommandMappingProfile : Profile
     {

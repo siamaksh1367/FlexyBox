@@ -2,8 +2,10 @@
 
 namespace FlexyBox.core.Queries.GetCategories
 {
-    public record GetCategoriesQuery() : IQuery<IEnumerable<GetCategoriesResponse>>
+    public class GetCategoriesQuery : IQuery<IEnumerable<GetCategoriesResponse>>
     {
+        public GetCategoriesQuery() { }
+
     }
 
 }

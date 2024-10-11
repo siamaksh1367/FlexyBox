@@ -2,9 +2,9 @@
 
 namespace FlexyBox.core.Commands.DeleteTag
 {
-    public sealed class DeleteTagCommandHandler : ICommandHandler<DeleteTagCommand, DeleteTagResponse>
+    public sealed class DeleteTagCommandHandler : ICommandHandler<DeleteTagCommand, int>
     {
-        public Task<DeleteTagResponse> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
+        public Task<int> Handle(DeleteTagCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

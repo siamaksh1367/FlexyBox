@@ -2,8 +2,12 @@
 
 namespace FlexyBox.core.Commands.CreateTag
 {
-    public record CreateTagCommand() : ICommand<CreateTagResponse>
+    public class CreateTagCommand : ICommand<CreateTagResponse>
     {
+        public string Name { get; set; }
+        public CreateTagCommand(string name)
+        {
+            Name = name;
+        }
     }
-
 }

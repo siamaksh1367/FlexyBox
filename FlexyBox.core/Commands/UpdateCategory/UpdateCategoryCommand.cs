@@ -2,6 +2,19 @@
 
 namespace FlexyBox.core.Commands.UpdateCategory
 {
-    public record UpdateCategoryCommand(int Id, string Name, string Description) : ICommand<UpdateCategoryResponse>;
+    public class UpdateCategoryCommand : ICommand<UpdateCategoryResponse>
+    {
+        public int Id { get; }
+        public string Name { get; }
+        public string Description { get; }
+
+        // Constructor to initialize properties
+        public UpdateCategoryCommand(int id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
+    }
 
 }

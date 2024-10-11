@@ -2,8 +2,15 @@
 
 namespace FlexyBox.core.Queries.GetPostWithCategories
 {
-    public record GetPostWithCategoriesQuery() : IQuery<GetPostWithCategoriesResponse>
+    public class GetPostWithCategoriesQuery : IQuery<GetPostWithCategoriesResponse>
     {
+        public int CategoryId { get; set; }
+
+        public GetPostWithCategoriesQuery(int categoryId)
+        {
+            CategoryId = categoryId;
+        }
     }
+
 
 }

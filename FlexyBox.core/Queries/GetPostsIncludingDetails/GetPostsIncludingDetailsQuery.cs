@@ -2,8 +2,12 @@
 
 namespace FlexyBox.core.Queries.GetPostsIncludingDetails
 {
-    public record GetPostsIncludingDetailsQuery() : IQuery<GetPostsIncludingDetailsResponse>
+    public class GetPostsIncludingDetailsQuery : IQuery<GetPostsIncludingDetailsResponse>
     {
+        public GetPostsIncludingDetailsQuery()
+        {
+        }
     }
+
 
 }

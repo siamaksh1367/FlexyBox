@@ -2,9 +2,9 @@
 
 namespace FlexyBox.core.Commands.DeleteComment
 {
-    public class DeleteCommentCommandHandler : ICommandHandler<DeleteCommentCommand, DeleteCommentResponse>
+    public class DeleteCommentCommandHandler : ICommandHandler<DeleteCommentCommand, int>
     {
-        public Task<DeleteCommentResponse> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
+        public Task<int> Handle(DeleteCommentCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

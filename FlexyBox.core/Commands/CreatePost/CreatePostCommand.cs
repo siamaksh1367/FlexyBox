@@ -4,7 +4,20 @@ using FlexyBox.dal.Models;
 
 namespace FlexyBox.core.Commands.CreatePost
 {
-    public record CreatePostCommand(string Title, byte[] Content, List<string> Tags, int CategoryId) : ICommand<CreatePostResponse>;
+    public class CreatePostCommand : ICommand<CreatePostResponse>
+    {
+        public string Title { get; set; }
+        public byte[] Content { get; set; }
+        public List<string> Tags { get; set; }
+        public int CategoryId { get; set; }
+        public CreatePostCommand(string title, byte[] content, List<string> tags, int categoryId)
+        {
+            Title = title;
+            Content = content;
+            Tags = tags;
+            CategoryId = categoryId;
+        }
+    }
     public class CreatePostCommandMappingProfile : Profile
     {
         public CreatePostCommandMappingProfile()

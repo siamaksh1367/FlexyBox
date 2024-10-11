@@ -3,7 +3,19 @@ using FlexyBox.dal.Models;
 
 namespace FlexyBox.core.Commands.CreateCategory
 {
-    public record CreateCategoryResponse(int Id, string Name, string Description);
+    public class CreateCategoryResponse
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public CreateCategoryResponse(int id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
+    }
 
     public class CreateCategoryResponseMappingProfile : Profile
     {

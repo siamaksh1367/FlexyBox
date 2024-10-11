@@ -2,8 +2,11 @@
 
 namespace FlexyBox.core.Commands.DeleteTag
 {
-    public record DeleteTagCommand() : ICommand<DeleteTagResponse>
+    public class DeleteTagCommand : DeleteCommand
     {
+        public DeleteTagCommand(int id) : base(id)
+        {
+        }
     }
 
 }

@@ -3,7 +3,20 @@ using FlexyBox.dal.Models;
 
 namespace FlexyBox.core.Queries.GetCategories
 {
-    public record GetCategoriesResponse(int Id, string Name, string Description);
+    public class GetCategoriesResponse
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public GetCategoriesResponse(int id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
+    }
+
 
 
     public class GetCategoriesResponseMappingProfile : Profile

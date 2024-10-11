@@ -2,7 +2,11 @@
 
 namespace FlexyBox.core.Queries.GetCommentsForPost
 {
-    public record GetCommentsForPostQuery() : IQuery<GetCommentsForPostResponse>
+    public class GetCommentsForPostQuery : IQuery<GetCommentsForPostResponse>
     {
+        public GetCommentsForPostQuery()
+        {
+        }
     }
+
 }

@@ -2,8 +2,15 @@
 
 namespace FlexyBox.core.Commands.UpdateComment
 {
-    public record UpdateCommentCommand() : ICommand<UpdateCommentResponse>
+    public class UpdateCommentCommand : ICommand<UpdateCommentResponse>
     {
+        public int CommentId { get; set; }
+        public string UpdatedContent { get; set; }
+        public UpdateCommentCommand(int commentId, string updatedContent)
+        {
+            CommentId = commentId;
+            UpdatedContent = updatedContent;
+        }
     }
 
 }

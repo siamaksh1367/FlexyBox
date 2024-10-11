@@ -3,7 +3,19 @@ using FlexyBox.dal.Models;
 
 namespace FlexyBox.core.Commands.UpdateCategory
 {
-    public record UpdateCategoryResponse(int Id, string Name, string Description);
+    public class UpdateCategoryResponse
+    {
+        public int Id { get; }
+        public string Name { get; }
+        public string Description { get; }
+        public UpdateCategoryResponse(int id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
+    }
+
 
 
     public class UpdateCategoryResponseMappingProfile : Profile

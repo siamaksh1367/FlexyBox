@@ -2,7 +2,14 @@
 
 namespace FlexyBox.core.Queries.GetTagsForPost
 {
-    public record GetTagsForPostQuery() : IQuery<GetTagsForPostResponse>
+    public class GetTagsForPostQuery : IQuery<GetTagsForPostResponse>
     {
+        public int PostId { get; set; }
+
+        public GetTagsForPostQuery(int postId)
+        {
+            PostId = postId;
+        }
     }
+
 }

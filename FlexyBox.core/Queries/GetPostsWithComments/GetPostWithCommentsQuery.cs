@@ -2,8 +2,15 @@
 
 namespace FlexyBox.core.Queries.GetPostsWithComments
 {
-    public record GetPostWithCommentsQuery() : IQuery<GetPostWithCommentsResponse>
+    public class GetPostWithCommentsQuery : IQuery<GetPostWithCommentsResponse>
     {
+        public int PostId { get; set; }
+
+        public GetPostWithCommentsQuery(int postId)
+        {
+            PostId = postId;
+        }
     }
+
 
 }

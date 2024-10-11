@@ -2,7 +2,10 @@
 
 namespace FlexyBox.core.Commands.DeleteComment
 {
-    public record DeleteCommentCommand() : ICommand<DeleteCommentResponse>
+    public class DeleteCommentCommand : DeleteCommand
     {
+        public DeleteCommentCommand(int id) : base(id)
+        {
+        }
     }
 }
