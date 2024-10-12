@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace FlexyBox.dal.Generic
 {
@@ -11,7 +10,7 @@ namespace FlexyBox.dal.Generic
 
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
-        Task<EntityEntry<TEntity>> AddAsync(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity);
         Task AddRangeAsync(IEnumerable<TEntity> entities);
 
         void Remove(TEntity entity);

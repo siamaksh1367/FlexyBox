@@ -8,9 +8,10 @@ public class HttpRequestBuilder
     private HttpRequestMessage _httpRequestMessage;
     private Uri _url;
     private readonly HttpClient _httpClient;
-    public HttpRequestBuilder(HttpClient httpClient)
+    public HttpRequestBuilder(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("FlexyBox");
+        Console.WriteLine(_httpClient.BaseAddress);
         _httpRequestMessage = new HttpRequestMessage();
     }
     internal HttpRequestBuilder SetJsonContent<T>(T content)
@@ -67,7 +68,7 @@ public class HttpRequestBuilder
         _httpRequestMessage.Headers.Add(name, value);
         return this;
     }
-    internal HttpRequestBuilder AddBearerToken(string token)
+    public HttpRequestBuilder AddBearerToken(string token)
     {
         _httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
         return this;

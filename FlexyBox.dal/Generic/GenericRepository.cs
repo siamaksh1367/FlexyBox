@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
 namespace FlexyBox.dal.Generic
@@ -35,9 +34,9 @@ namespace FlexyBox.dal.Generic
             return await _dbSet.SingleOrDefaultAsync(predicate);
         }
 
-        public async Task<EntityEntry<TEntity>> AddAsync(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
-            return await _dbSet.AddAsync(entity);
+            return (await _dbSet.AddAsync(entity)).Entity;
         }
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities)

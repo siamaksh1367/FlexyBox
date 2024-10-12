@@ -6,6 +6,7 @@ namespace FlexyBox.core.Commands.DeleteCategory
     {
         public DeleteCategoryCommand(int id) : base(id)
         {
+
         }
     }
 }
