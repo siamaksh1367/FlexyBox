@@ -69,12 +69,14 @@ services:
       context: .
       dockerfile: FlexyBox.web/Dockerfile
     ports:
-      - "7125:80"  # Map container port 80 to host port 8080
+    - "7125:80"  
+    - "443:443"  
     volumes:
       - ./FlexyBox.web/nginx.conf:/etc/nginx/nginx.conf
-    restart: always 
+      - ./cert.pem:/etc/ssl/certs/cert.pem
+      - ./key.pem:/etc/ssl/private/key.pem
+    restart: always
 
 networks:
   app-network:
     driver: bridge
-
