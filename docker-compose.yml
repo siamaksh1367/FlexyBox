@@ -57,8 +57,8 @@ services:
       - OktaServer__Authority=https://dev-uct7p4or1fa0cwym.us.auth0.com/
       - OktaServer__Audience=https://localhost:7204/
     ports:
-      - "7132:8080"
-      - "7133:443"
+      - "7203:8080"
+      - "7204:443"
     volumes:
       - ./cert.pfx:/cert.pfx
     networks:
@@ -75,6 +75,8 @@ services:
       - ./FlexyBox.web/nginx.conf:/etc/nginx/nginx.conf
       - ./cert.pem:/etc/ssl/certs/cert.pem
       - ./key.pem:/etc/ssl/private/key.pem
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
      - api
     networks:
