@@ -22,6 +22,7 @@ public class HttpRequestBuilder
     }
     public async Task<T> ExecuteAsync<T>()
     {
+        Console.WriteLine("im executed execute async");
         var result = await _httpClient.SendAsync(_httpRequestMessage);
         var response = result.EnsureSuccessStatusCode();
         var responseObject = await response.Content.ReadFromJsonAsync<T>();
@@ -29,7 +30,6 @@ public class HttpRequestBuilder
         {
             RequestUri = _url
         };
-
         return responseObject;
     }
     public HttpRequestBuilder AddUserAgent(string userAgent)
@@ -68,7 +68,7 @@ public class HttpRequestBuilder
         _httpRequestMessage.Headers.Add(name, value);
         return this;
     }
-    public HttpRequestBuilder AddBearerToken(string token)
+    internal HttpRequestBuilder AddBearerToken(string token)
     {
         _httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
         return this;
