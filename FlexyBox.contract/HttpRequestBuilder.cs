@@ -22,7 +22,6 @@ public class HttpRequestBuilder
     }
     public async Task<T> ExecuteAsync<T>()
     {
-        Console.WriteLine("im executed execute async");
         var result = await _httpClient.SendAsync(_httpRequestMessage);
         var response = result.EnsureSuccessStatusCode();
         var responseObject = await response.Content.ReadFromJsonAsync<T>();
