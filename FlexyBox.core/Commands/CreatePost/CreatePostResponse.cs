@@ -10,7 +10,7 @@ namespace FlexyBox.core.Commands.CreatePost
         public IEnumerable<string> Tags { get; internal set; }
         public string CategoryName { get; internal set; }
         public int Id { get; internal set; }
-        public byte[] Content { get; internal set; }
+        public string Content { get; internal set; }
     }
 
     public class CreatePostResponseMappingProfile : Profile

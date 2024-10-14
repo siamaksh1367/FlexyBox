@@ -2,6 +2,8 @@
 using FlexyBox.common;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Text;
+using YourNamespace;
 
 namespace FlexyBox.core.Services.ContentStorage
 {
@@ -16,7 +18,7 @@ namespace FlexyBox.core.Services.ContentStorage
             _option = option;
             _logger = logger;
         }
-        public async Task AddFileWithIdAsync(byte[] content, Guid identifier)
+        public async Task AddFileWithIdAsync(string content, Guid identifier)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(_option.Value.ConnectionString);
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(BlobContainerName);
@@ -25,7 +27,7 @@ namespace FlexyBox.core.Services.ContentStorage
 
             BlobClient blobClient = containerClient.GetBlobClient(identifier.ToString());
 
-            using (MemoryStream stream = new MemoryStream(content))
+            using (MemoryStream stream = new MemoryStream(content.ToByteArray()))
             {
                 await blobClient.UploadAsync(stream, overwrite: true);
             }
@@ -33,7 +35,7 @@ namespace FlexyBox.core.Services.ContentStorage
             _logger.LogInformation($"File uploaded to {blobClient.Uri}");
         }
 
-        public async Task<byte[]> GetFileByNameById(Guid identifier)
+        public async Task<string> GetFileByNameById(Guid identifier)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(_option.Value.ConnectionString);
 
@@ -44,7 +46,13 @@ namespace FlexyBox.core.Services.ContentStorage
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 await blobClient.DownloadToAsync(memoryStream);
-                return memoryStream.ToArray();
+
+                memoryStream.Position = 0;
+
+                using (StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8))
+                {
+                    return await reader.ReadToEndAsync();
+                }
             }
         }
     }

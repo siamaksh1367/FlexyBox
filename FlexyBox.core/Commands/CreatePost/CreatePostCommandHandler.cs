@@ -24,25 +24,9 @@ namespace FlexyBox.core.Commands.CreatePost
 
             var tags = await _unitOfWork.Tags.GetAllAsync();
 
-            var newTagNames = request.Tags.Where(t => !tags.Any(tg => tg.Name == t)).ToList();
-
-            var newTags = newTagNames.Select(name => new Tag { Name = name }).ToList();
-
-            if (newTags.Any())
+            foreach (var tag in tags)
             {
-                await _unitOfWork.Tags.AddRangeAsync(newTags);
-                await _unitOfWork.CompleteAsync();
-            }
-
-            tags = await _unitOfWork.Tags.GetAllAsync();
-
-            foreach (var tagName in request.Tags)
-            {
-                var tag = tags.FirstOrDefault(tg => tg.Name == tagName);
-                if (tag != null)
-                {
-                    post.Tags.Add(tag);
-                }
+                post.Tags.Add(tag);
             }
 
             await _contentStorage.AddFileWithIdAsync(request.Content, post.ContentKey);

@@ -6,11 +6,11 @@ namespace FlexyBox.core.Commands.CreateComment
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public byte[] Content { get; set; }
+        public string Content { get; set; }
         public List<string> Tags { get; set; }
         public int CategoryId { get; set; }
 
-        public UpdatePostCommand(int id, string title, byte[] content, List<string> tags, int categoryId)
+        public UpdatePostCommand(int id, string title, string content, List<string> tags, int categoryId)
         {
             Id = id;
             Title = title;

@@ -2,7 +2,7 @@
 {
     public interface IContentStorage
     {
-        public Task AddFileWithIdAsync(byte[] content, Guid identifier);
-        public Task<byte[]> GetFileByNameById(Guid identifier);
+        public Task AddFileWithIdAsync(string content, Guid identifier);
+        public Task<string> GetFileByNameById(Guid identifier);
     }
 }

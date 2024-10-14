@@ -1,21 +1,24 @@
 ﻿using AutoMapper;
 using FlexyBox.core.Shared;
 using FlexyBox.dal.Models;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace FlexyBox.core.Commands.CreatePost
 {
     public class CreatePostCommand : ICommand<CreatePostResponse>
     {
         public string Title { get; set; }
-        public byte[] Content { get; set; }
-        public List<string> Tags { get; set; }
+        public string Content { get; set; }
+        public List<int> Tags { get; set; }
         public int CategoryId { get; set; }
-        public CreatePostCommand(string title, byte[] content, List<string> tags, int categoryId)
+        public IBrowserFile Image { get; set; }
+        public CreatePostCommand(string title, string content, List<int> tags, int categoryId, IBrowserFile image)
         {
             Title = title;
             Content = content;
             Tags = tags;
             CategoryId = categoryId;
+            Image = image;
         }
     }
     public class CreatePostCommandMappingProfile : Profile
