@@ -1,7 +1,6 @@
 ﻿using FlexyBox.core.Commands.CreateCategory;
 using FlexyBox.core.Commands.DeleteCategory;
 using FlexyBox.core.Commands.UpdateCategory;
-using FlexyBox.core.Queries.GetCategories;
 
 namespace FlexyBox.contract.Services
 {
@@ -9,6 +8,8 @@ namespace FlexyBox.contract.Services
     {
         HttpRequestBuilder CreateCategory(CreateCategoryCommand createCategoryCommand);
         HttpRequestBuilder UpdateCategory(UpdateCategoryCommand updateCategoryCommand);
+        HttpRequestBuilder GetAllCategories();
+        HttpRequestBuilder DeleteCategory(DeleteCategoryCommand deleteCategoryCommand);
     }
 
     public class CategoryService : ICategoryService
@@ -22,19 +23,22 @@ namespace FlexyBox.contract.Services
         }
         public HttpRequestBuilder CreateCategory(CreateCategoryCommand createCategoryCommand)
         {
-            return _requestBuilder.SetMethod(HttpMethod.Post).SetJsonContent<CreateCategoryCommand>(createCategoryCommand);
+            return _requestBuilder.SetMethod(HttpMethod.Post)
+                .SetJsonContent<CreateCategoryCommand>(createCategoryCommand);
         }
         public HttpRequestBuilder UpdateCategory(UpdateCategoryCommand updateCategoryCommand)
         {
-            return _requestBuilder.SetMethod(HttpMethod.Put).SetJsonContent<UpdateCategoryCommand>(updateCategoryCommand).AppendEndpoint(updateCategoryCommand.Id.ToString());
+            return _requestBuilder.SetMethod(HttpMethod.Put)
+                .SetJsonContent<UpdateCategoryCommand>(updateCategoryCommand)
+                .AppendEndpoint(updateCategoryCommand.Id.ToString());
         }
         public HttpRequestBuilder DeleteCategory(DeleteCategoryCommand deleteCategoryCommand)
         {
             return _requestBuilder.SetMethod(HttpMethod.Delete).AppendEndpoint(deleteCategoryCommand.Id.ToString());
         }
-        public HttpRequestBuilder GetCategories(GetCategoriesQuery getCategoriesQuery)
+        public HttpRequestBuilder GetAllCategories()
         {
-            return _requestBuilder.SetMethod(HttpMethod.Get).SetJsonContent<GetCategoriesQuery>(getCategoriesQuery);
+            return _requestBuilder.SetMethod(HttpMethod.Get);
         }
     }
 
