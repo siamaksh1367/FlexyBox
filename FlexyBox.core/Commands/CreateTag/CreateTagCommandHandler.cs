@@ -1,4 +1,4 @@
-﻿using FlexyBox.core.Queries.SearchTag;
+﻿using FlexyBox.core.Queries.GetTags;
 using FlexyBox.core.Shared;
 using FlexyBox.dal.Generic;
 using FlexyBox.dal.Models;

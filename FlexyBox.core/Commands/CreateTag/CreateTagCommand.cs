@@ -1,4 +1,4 @@
-﻿using FlexyBox.core.Queries.SearchTag;
+﻿using FlexyBox.core.Queries.GetTags;
 using FlexyBox.core.Shared;
 
 namespace FlexyBox.core.Commands.CreateTag

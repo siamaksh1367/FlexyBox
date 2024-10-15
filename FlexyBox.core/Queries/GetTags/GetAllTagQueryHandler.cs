@@ -2,7 +2,7 @@
 using FlexyBox.core.Shared;
 using FlexyBox.dal.Generic;
 
-namespace FlexyBox.core.Queries.SearchTag
+namespace FlexyBox.core.Queries.GetTags
 {
     public class GetAllTagQueryHandler : IQueryHandler<GetAllTagsQuery, IEnumerable<GetTagsResponse>>
     {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FlexyBox.dal.Models;
 
-namespace FlexyBox.core.Queries.SearchTag
+namespace FlexyBox.core.Queries.GetTags
 {
 
     public class GetTagsResponseMappingProfile : Profile

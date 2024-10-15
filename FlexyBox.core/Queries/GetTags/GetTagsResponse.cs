@@ -1,4 +1,4 @@
-﻿namespace FlexyBox.core.Queries.SearchTag
+﻿namespace FlexyBox.core.Queries.GetTags
 {
     public class GetTagsResponse
     {
