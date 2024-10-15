@@ -4,7 +4,7 @@ using FlexyBox.dal.Generic;
 
 namespace FlexyBox.core.Queries.SearchTag
 {
-    public class GetAllTagQueryHandler : IQueryHandler<GetAllTagsQuery, IEnumerable<GetAllTagsResponse>>
+    public class GetAllTagQueryHandler : IQueryHandler<GetAllTagsQuery, IEnumerable<GetTagsResponse>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -14,10 +14,10 @@ namespace FlexyBox.core.Queries.SearchTag
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<GetAllTagsResponse>> Handle(GetAllTagsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetTagsResponse>> Handle(GetAllTagsQuery request, CancellationToken cancellationToken)
         {
             var tags = await _unitOfWork.Tags.GetAllAsync();
-            return _mapper.Map<IEnumerable<GetAllTagsResponse>>(tags);
+            return _mapper.Map<IEnumerable<GetTagsResponse>>(tags);
         }
     }
 }

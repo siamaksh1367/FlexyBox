@@ -5,7 +5,7 @@ namespace FlexyBox.contract.Services
     public interface ITagService
     {
         HttpRequestBuilder CreateTag(CreateTagCommand createTagCommand);
-        HttpRequestBuilder GetAllTag();
+        HttpRequestBuilder GetAllTags();
     }
 
     public class TagService : ITagService
@@ -20,12 +20,12 @@ namespace FlexyBox.contract.Services
 
         public HttpRequestBuilder CreateTag(CreateTagCommand createTagCommand)
         {
-            Console.WriteLine(createTagCommand.Name);
+
             return _requestBuilder.SetMethod(HttpMethod.Post)
                  .SetJsonContent<CreateTagCommand>(createTagCommand);
         }
 
-        public HttpRequestBuilder GetAllTag()
+        public HttpRequestBuilder GetAllTags()
         {
             return _requestBuilder.SetMethod(HttpMethod.Get);
         }

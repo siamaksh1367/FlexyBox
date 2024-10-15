@@ -15,5 +15,7 @@ namespace FlexyBox.dal.Generic
 
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+
+        void Attach(TEntity entity);
     }
 }

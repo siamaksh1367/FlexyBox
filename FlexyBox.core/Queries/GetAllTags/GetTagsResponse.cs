@@ -1,9 +1,8 @@
-﻿namespace FlexyBox.core.Commands.CreateTag
+﻿namespace FlexyBox.core.Queries.SearchTag
 {
-    public class CreateTagResponse
+    public class GetTagsResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
-
 }

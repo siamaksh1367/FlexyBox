@@ -53,5 +53,10 @@ namespace FlexyBox.dal.Generic
         {
             _dbSet.RemoveRange(entities);
         }
+
+        public void Attach(TEntity entity)
+        {
+            _dbSet.Attach(entity);
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace FlexyBox.core.Queries.SearchTag
 {
-    public class GetAllTagsQuery : IQuery<IEnumerable<GetAllTagsResponse>>
+    public class GetAllTagsQuery : IQuery<IEnumerable<GetTagsResponse>>
     {
     }
 }

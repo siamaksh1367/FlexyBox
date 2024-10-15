@@ -25,20 +25,17 @@ services:
     networks:
       - app-network
 
-  azurite:
-    image: mcr.microsoft.com/azure-storage/azurite
-    container_name: azurite
-    ports:
-      - "10000:10000"  
-      - "10001:10001"  
-      - "10002:10002"  
-    volumes:
-      - ./azurite:/data  
-    command: "azurite -s --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0"
-    networks:
-      - app-network
-    depends_on:
-     - dev
+  # azurite:
+  #   container_name: azurite
+  #   image: mcr.microsoft.com/azure-storage/azurite
+  #   restart: always
+  #   volumes:
+  #      - azurite_data:/data
+  #   command: azurite --loose -l /data --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0
+  #   ports:
+  #      - '10000:10000'
+  #      - '10001:10001'
+  #      - '10002:10002'
 
   api:
     image: ${DOCKER_REGISTRY-}flexyboxapi
@@ -47,22 +44,23 @@ services:
       dockerfile: FlexyBox.api/Dockerfile
     depends_on:
       - sqlserver
-      - azurite
     environment:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/cert.pfx
       - ASPNETCORE_URLS=https://+:443;http://+:8080
       - SQLConnectionString__ConnectionString=Server=sqlserver,1433;Database=FlexyBoxDB;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True
-      - StorageConnectionString__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFe3fS4rZF8D58a5w==;BlobEndpoint=http://localhost:10000/devstoreaccount1;QueueEndpoint=http://localhost:10001/devstoreaccount1;TableEndpoint=http://localhost:10002/devstoreaccount1;
+      - StorageConnectionString__ConnectionString=***;
       - OktaServer__Authority=https://dev-uct7p4or1fa0cwym.us.auth0.com/
       - OktaServer__Audience=https://localhost:7204/
     ports:
       - "7203:8080"
       - "7204:443"
     volumes:
-      - ./cert.pfx:/cert.pfx
+      - ./cert.pfx:/app/cert.pfx   # Certificates
+      - ./content:/app/content      # Volume for storing files and images
     networks:
       - app-network
+
     
   web:
     build:

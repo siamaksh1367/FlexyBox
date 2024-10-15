@@ -18,7 +18,32 @@ namespace FlexyBox.core.Services.ContentStorage
             _option = option;
             _logger = logger;
         }
-        public async Task AddFileWithIdAsync(string content, Guid identifier)
+        public async Task AddImageByIdAsync(byte[] imageData, Guid identifier)
+        {
+            try
+            {
+                BlobServiceClient blobServiceClient = new BlobServiceClient(_option.Value.ConnectionString);
+
+                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(BlobContainerName);
+
+                await containerClient.CreateIfNotExistsAsync();
+
+                BlobClient blobClient = containerClient.GetBlobClient(identifier.ToString());
+
+                using (MemoryStream stream = new MemoryStream(imageData))
+                {
+                    await blobClient.UploadAsync(stream, overwrite: true);
+                }
+                _logger.LogInformation($"Image uploaded to {blobClient.Uri}");
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task AddStringByIdAsync(string content, Guid identifier)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(_option.Value.ConnectionString);
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(BlobContainerName);
@@ -35,7 +60,7 @@ namespace FlexyBox.core.Services.ContentStorage
             _logger.LogInformation($"File uploaded to {blobClient.Uri}");
         }
 
-        public async Task<string> GetFileByNameById(Guid identifier)
+        public async Task<string> GetFileByIdAsync(Guid identifier)
         {
             BlobServiceClient blobServiceClient = new BlobServiceClient(_option.Value.ConnectionString);
 
@@ -54,6 +79,11 @@ namespace FlexyBox.core.Services.ContentStorage
                     return await reader.ReadToEndAsync();
                 }
             }
+        }
+
+        public byte[] GetImageByIdAsync(Guid identifier)
+        {
+            throw new NotImplementedException();
         }
     }
 }
