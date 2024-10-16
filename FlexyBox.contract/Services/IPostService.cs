@@ -1,4 +1,7 @@
-﻿using FlexyBox.core.Commands.CreatePost;
+﻿using FlexyBox.core.Commands.CreateComment;
+using FlexyBox.core.Commands.CreatePost;
+using FlexyBox.core.Commands.DeletePost;
+using FlexyBox.core.Queries.GetPost;
 using FlexyBox.core.Queries.GetPosts;
 
 namespace FlexyBox.contract.Services
@@ -6,7 +9,10 @@ namespace FlexyBox.contract.Services
     public interface IPostService
     {
         HttpRequestBuilder CreatePost(CreatePostCommand createPostCommand);
-        HttpRequestBuilder GetPosts(GetPostQuery getPostQuery);
+        HttpRequestBuilder GetPosts(GetPostsQuery getPostQuery);
+        HttpRequestBuilder GetPost(GetPostQuery getPostQuery);
+        HttpRequestBuilder DeletePost(DeletePostCommand deleteCommand);
+        HttpRequestBuilder Update(UpdatePostCommand updatePostCommand);
     }
 
     public class PostService : IPostService
@@ -25,9 +31,7 @@ namespace FlexyBox.contract.Services
             return _requestBuilder.SetMethod(HttpMethod.Post)
                  .SetJsonContent<CreatePostCommand>(createPostCommand);
         }
-
-
-        public HttpRequestBuilder GetPosts(GetPostQuery getPostPostQuery)
+        public HttpRequestBuilder GetPosts(GetPostsQuery getPostPostQuery)
         {
             _requestBuilder.AssignEndpoint(EndPoint);
 
@@ -53,6 +57,24 @@ namespace FlexyBox.contract.Services
             _requestBuilder.AddQueryParameter("limit", getPostPostQuery.Limit.ToString());
 
             return _requestBuilder.SetMethod(HttpMethod.Get);
+        }
+        public HttpRequestBuilder GetPost(GetPostQuery getPostQuery)
+        {
+            return _requestBuilder.SetMethod(HttpMethod.Get)
+                .AssignEndpoint($"{EndPoint}/{getPostQuery.Id}");
+        }
+
+        public HttpRequestBuilder DeletePost(DeletePostCommand deleteCommand)
+        {
+            return _requestBuilder.SetMethod(HttpMethod.Delete)
+                .AssignEndpoint($"{EndPoint}/{deleteCommand.Id}");
+        }
+
+        public HttpRequestBuilder Update(UpdatePostCommand updatePostCommand)
+        {
+            return _requestBuilder.SetMethod(HttpMethod.Put)
+                .AssignEndpoint($"{EndPoint}/{updatePostCommand.Id}")
+                .SetJsonContent<UpdatePostCommand>(updatePostCommand);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace FlexyBox.contract.Services
 
     public class CategoryService : ICategoryService
     {
-        private const string EndPoint = "api/categories";
+        private const string EndPoint = "/api/categories";
         private readonly HttpRequestBuilder _requestBuilder;
 
         public CategoryService(HttpRequestBuilder requestBuilder)
@@ -31,7 +31,7 @@ namespace FlexyBox.contract.Services
         {
             return _requestBuilder.SetMethod(HttpMethod.Put)
                 .SetJsonContent<UpdateCategoryCommand>(updateCategoryCommand)
-                .AppendEndpoint(updateCategoryCommand.Id.ToString());
+                .AppendEndpoint("categories/" + updateCategoryCommand.Id.ToString());
         }
         public HttpRequestBuilder DeleteCategory(DeleteCategoryCommand deleteCategoryCommand)
         {

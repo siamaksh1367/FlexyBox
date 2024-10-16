@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using FlexyBox.core.Queries.GetPost;
 using FlexyBox.dal.Models;
 
 namespace FlexyBox.core.Queries.GetPosts
 {
-    public class GetPostResponseMappingProfile : Profile
+    public class GetPostsResponseMappingProfile : Profile
     {
-        public GetPostResponseMappingProfile()
+        public GetPostsResponseMappingProfile()
         {
             CreateMap<Post, GetPostResponse>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))

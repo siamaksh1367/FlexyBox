@@ -39,5 +39,14 @@ namespace FlexyBox.dal.Repositories.Implementation
             var count = await query.CountAsync();
             return new WithCount<Post>() { Count = count, Response = response };
         }
+
+        public async Task<Post> GetPostWithDetails(int Id)
+        {
+            return await _dbSet
+                .Include(x => x.Category)
+                .Include(x => x.Tags)
+                .Include(x => x.Comments)
+                .FirstOrDefaultAsync(x => x.Id == Id);
+        }
     }
 }

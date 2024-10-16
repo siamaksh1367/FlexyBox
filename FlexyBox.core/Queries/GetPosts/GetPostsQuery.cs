@@ -1,9 +1,10 @@
 ﻿using FlexyBox.common;
+using FlexyBox.core.Queries.GetPost;
 using FlexyBox.core.Shared;
 
 namespace FlexyBox.core.Queries.GetPosts
 {
-    public class GetPostQuery : IQuery<WithCount<GetPostResponse>>
+    public class GetPostsQuery : IQuery<WithCount<GetPostResponse>>
     {
         public List<int>? TagIds { get; set; }
         public int CategoryId { get; set; }
