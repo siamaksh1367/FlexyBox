@@ -6,7 +6,7 @@ namespace FlexyBox.contract.Services
     public interface IPostService
     {
         HttpRequestBuilder CreatePost(CreatePostCommand createPostCommand);
-        HttpRequestBuilder GetPostWithAllDetails(int postId);
+        HttpRequestBuilder GetOnePostWithAllDetails(int postId);
         HttpRequestBuilder GetPostsIncludingDetails();
         HttpRequestBuilder GetPostsIncludingDetailsWithCriteria(GetPostsIncludingDetailsQuery getPostsIncludingDetailsQuery);
     }
@@ -27,13 +27,18 @@ namespace FlexyBox.contract.Services
                  .SetJsonContent<CreatePostCommand>(createPostCommand);
         }
 
-        public HttpRequestBuilder GetPostWithAllDetails(int postId)
+        public HttpRequestBuilder GetOnePostWithAllDetails(int postId)
         {
-            return _requestBuilder.SetMethod(HttpMethod.Post)
+            return _requestBuilder.SetMethod(HttpMethod.Get)
                  .AppendEndpoint($"/{postId}");
         }
 
         public HttpRequestBuilder GetPostsIncludingDetails()
+        {
+            return _requestBuilder.SetMethod(HttpMethod.Get);
+        }
+
+        public HttpRequestBuilder GetAllPostsCount()
         {
             return _requestBuilder.SetMethod(HttpMethod.Get);
         }
