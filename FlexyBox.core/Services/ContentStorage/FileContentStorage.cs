@@ -31,10 +31,10 @@
             return await File.ReadAllTextAsync(filePath);
         }
 
-        public byte[] GetImageByIdAsync(Guid identifier)
+        public async Task<byte[]> GetImageByIdAsync(Guid identifier)
         {
             var filePath = Path.Combine(_storagePath, $"{identifier}.png");
-            return File.Exists(filePath) ? File.ReadAllBytes(filePath) : null;
+            return File.Exists(filePath) ? await File.ReadAllBytesAsync(filePath) : null;
         }
     }
 }

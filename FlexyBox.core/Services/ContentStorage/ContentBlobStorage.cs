@@ -81,7 +81,7 @@ namespace FlexyBox.core.Services.ContentStorage
             }
         }
 
-        public byte[] GetImageByIdAsync(Guid identifier)
+        public Task<byte[]> GetImageByIdAsync(Guid identifier)
         {
             throw new NotImplementedException();
         }
