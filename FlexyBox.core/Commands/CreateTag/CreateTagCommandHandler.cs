@@ -5,7 +5,7 @@ using FlexyBox.dal.Models;
 
 namespace FlexyBox.core.Commands.CreateTag
 {
-    public sealed class CreateTagCommandHandler : ICommandHandler<CreateTagCommand, GetTagsResponse>
+    public sealed class CreateTagCommandHandler : ICommandHandler<CreateTagCommand, GetTagResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -13,12 +13,12 @@ namespace FlexyBox.core.Commands.CreateTag
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<GetTagsResponse> Handle(CreateTagCommand request, CancellationToken cancellationToken)
+        public async Task<GetTagResponse> Handle(CreateTagCommand request, CancellationToken cancellationToken)
         {
             var addedTag = await _unitOfWork.Tags.AddAsync(new Tag() { Name = request.Name });
             await _unitOfWork.CompleteAsync();
             var tag = await _unitOfWork.Tags.SingleOrDefaultAsync(x => x.Id == addedTag.Id);
-            return new GetTagsResponse() { Id = tag.Id, Name = tag.Name };
+            return new GetTagResponse() { Id = tag.Id, Name = tag.Name };
 
         }
     }

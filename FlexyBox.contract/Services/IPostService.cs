@@ -1,24 +1,23 @@
 ﻿using FlexyBox.core.Commands.CreatePost;
-using FlexyBox.core.Queries.GetPostsIncludingDetails;
+using FlexyBox.core.Queries.GetPosts;
 
 namespace FlexyBox.contract.Services
 {
     public interface IPostService
     {
         HttpRequestBuilder CreatePost(CreatePostCommand createPostCommand);
-        HttpRequestBuilder GetOnePostWithAllDetails(int postId);
-        HttpRequestBuilder GetPostsIncludingDetails();
-        HttpRequestBuilder GetPostsIncludingDetailsWithCriteria(GetPostsIncludingDetailsQuery getPostsIncludingDetailsQuery);
+        HttpRequestBuilder GetPosts(GetPostQuery getPostQuery);
     }
 
     public class PostService : IPostService
     {
+        private const string EndPoint = "api/posts";
         private readonly HttpRequestBuilder _requestBuilder;
 
         public PostService(HttpRequestBuilder requestBuilder)
         {
             _requestBuilder = requestBuilder;
-            _requestBuilder.AssignEndpoint("api/posts");
+            _requestBuilder.AssignEndpoint(EndPoint);
         }
         public HttpRequestBuilder CreatePost(CreatePostCommand createPostCommand)
         {
@@ -27,37 +26,31 @@ namespace FlexyBox.contract.Services
                  .SetJsonContent<CreatePostCommand>(createPostCommand);
         }
 
-        public HttpRequestBuilder GetOnePostWithAllDetails(int postId)
-        {
-            return _requestBuilder.SetMethod(HttpMethod.Get)
-                 .AppendEndpoint($"/{postId}");
-        }
 
-        public HttpRequestBuilder GetPostsIncludingDetails()
+        public HttpRequestBuilder GetPosts(GetPostQuery getPostPostQuery)
         {
-            return _requestBuilder.SetMethod(HttpMethod.Get);
-        }
+            _requestBuilder.AssignEndpoint(EndPoint);
 
-        public HttpRequestBuilder GetAllPostsCount()
-        {
-            return _requestBuilder.SetMethod(HttpMethod.Get);
-        }
-
-        public HttpRequestBuilder GetPostsIncludingDetailsWithCriteria(GetPostsIncludingDetailsQuery getPostsIncludingDetailsQuery)
-        {
-            if (getPostsIncludingDetailsQuery.TagIds is not null)
+            if (getPostPostQuery.TagIds is not null)
             {
-                foreach (var TagId in getPostsIncludingDetailsQuery.TagIds)
+                foreach (var TagId in getPostPostQuery.TagIds)
+                {
                     _requestBuilder.AddQueryParameter("tagid", TagId.ToString());
+                }
             }
-            if (getPostsIncludingDetailsQuery.CategoryId > 0)
+
+            if (getPostPostQuery.CategoryId > 0)
             {
-                _requestBuilder.AddQueryParameter("categoryid", getPostsIncludingDetailsQuery.CategoryId.ToString());
+                _requestBuilder.AddQueryParameter("categoryid", getPostPostQuery.CategoryId.ToString());
             }
-            if (string.IsNullOrEmpty(getPostsIncludingDetailsQuery.UserId))
+
+            if (!string.IsNullOrEmpty(getPostPostQuery.UserId))
             {
-                _requestBuilder.AddQueryParameter("userid", getPostsIncludingDetailsQuery.UserId);
+                _requestBuilder.AddQueryParameter("userid", getPostPostQuery.UserId);
             }
+
+            _requestBuilder.AddQueryParameter("offset", getPostPostQuery.Offset.ToString());
+            _requestBuilder.AddQueryParameter("limit", getPostPostQuery.Limit.ToString());
 
             return _requestBuilder.SetMethod(HttpMethod.Get);
         }

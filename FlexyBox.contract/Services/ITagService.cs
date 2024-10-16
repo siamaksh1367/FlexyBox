@@ -10,12 +10,13 @@ namespace FlexyBox.contract.Services
 
     public class TagService : ITagService
     {
+        private const string EndPoint = "api/tags";
         private readonly HttpRequestBuilder _requestBuilder;
 
         public TagService(HttpRequestBuilder requestBuilder)
         {
             _requestBuilder = requestBuilder;
-            _requestBuilder.AssignEndpoint("api/tags");
+            _requestBuilder.AssignEndpoint(EndPoint);
         }
 
         public HttpRequestBuilder CreateTag(CreateTagCommand createTagCommand)

@@ -38,7 +38,7 @@ public class HttpRequestBuilder
     }
     internal HttpRequestBuilder AssignEndpoint(string endPoint)
     {
-        var url = new Uri(endPoint, UriKind.RelativeOrAbsolute);
+        var url = new Uri(_httpClient.BaseAddress, endPoint);
         _httpRequestMessage.RequestUri = url;
         _url = url;
         return this;
@@ -46,12 +46,12 @@ public class HttpRequestBuilder
     internal HttpRequestBuilder AppendEndpoint(string appendix)
     {
         appendix = appendix.TrimStart('/');
-        var baseUri = _httpRequestMessage.RequestUri.ToString();
-        var newUri = new Uri($"{baseUri.TrimEnd('/')}/{appendix}", UriKind.RelativeOrAbsolute);
+        var baseUri = _httpRequestMessage.RequestUri ?? _httpClient.BaseAddress;
+        var newUri = new Uri(baseUri, appendix);
         _httpRequestMessage.RequestUri = newUri;
-
         return this;
     }
+
     internal HttpRequestBuilder SetMethod(HttpMethod method)
     {
         _httpRequestMessage.Method = method;
@@ -81,6 +81,12 @@ public class HttpRequestBuilder
     {
         name = name.Trim().ToLower();
         value = value.Trim().ToLower();
+
+        if (_httpRequestMessage.RequestUri == null || !_httpRequestMessage.RequestUri.IsAbsoluteUri)
+        {
+            throw new InvalidOperationException("The RequestUri must be an absolute URI before adding query parameters.");
+        }
+
         var uriBuilder = new UriBuilder(_httpRequestMessage.RequestUri);
         var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
         query[name] = value;
@@ -88,6 +94,7 @@ public class HttpRequestBuilder
         _httpRequestMessage.RequestUri = uriBuilder.Uri;
         return this;
     }
+
     internal HttpRequestBuilder AddQueryParameters(params (string name, string value)[] parameters)
     {
         foreach (var (name, value) in parameters)

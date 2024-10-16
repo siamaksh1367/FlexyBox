@@ -14,12 +14,13 @@ namespace FlexyBox.contract.Services
 
     public class CategoryService : ICategoryService
     {
+        private const string EndPoint = "api/categories";
         private readonly HttpRequestBuilder _requestBuilder;
 
         public CategoryService(HttpRequestBuilder requestBuilder)
         {
             _requestBuilder = requestBuilder;
-            _requestBuilder.AssignEndpoint("api/categories");
+            _requestBuilder.AssignEndpoint(EndPoint);
         }
         public HttpRequestBuilder CreateCategory(CreateCategoryCommand createCategoryCommand)
         {

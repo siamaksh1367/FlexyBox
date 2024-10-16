@@ -1,11 +1,12 @@
-﻿using FlexyBox.dal.Generic;
+﻿using FlexyBox.common;
+using FlexyBox.dal.Generic;
 using FlexyBox.dal.Models;
 
 namespace FlexyBox.dal.Repositories.Interface
 {
     public interface IPostRepository : IGenericRepository<Post>
     {
-        Task<IEnumerable<Post>> GetAllPostsIncludingDetailsAsync();
+        Task<WithCount<Post>> GetPosts(List<int>? tagIds, string? userId, int categoryId, int offset, int limit);
     }
 
 }
