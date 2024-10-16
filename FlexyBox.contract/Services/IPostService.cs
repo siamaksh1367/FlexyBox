@@ -35,7 +35,7 @@ namespace FlexyBox.contract.Services
             {
                 foreach (var TagId in getPostPostQuery.TagIds)
                 {
-                    _requestBuilder.AddQueryParameter("tagid", TagId.ToString());
+                    _requestBuilder.AddQueryParameter("tagids", TagId.ToString());
                 }
             }
 
