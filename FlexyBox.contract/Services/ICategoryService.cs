@@ -35,7 +35,7 @@ namespace FlexyBox.contract.Services
         }
         public HttpRequestBuilder DeleteCategory(DeleteCategoryCommand deleteCategoryCommand)
         {
-            return _requestBuilder.SetMethod(HttpMethod.Delete).AppendEndpoint(deleteCategoryCommand.Id.ToString());
+            return _requestBuilder.SetMethod(HttpMethod.Delete).AppendEndpoint($"categories/{deleteCategoryCommand.Id}");
         }
         public HttpRequestBuilder GetAllCategories()
         {
