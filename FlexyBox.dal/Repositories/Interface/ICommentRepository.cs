@@ -6,5 +6,4 @@ namespace FlexyBox.dal.Repositories.Interface
     public interface ICommentRepository : IGenericRepository<Comment>
     {
     }
-
 }

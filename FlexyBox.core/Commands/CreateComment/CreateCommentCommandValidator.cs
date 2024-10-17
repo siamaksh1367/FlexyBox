@@ -2,7 +2,7 @@
 
 namespace FlexyBox.core.Commands.CreateComment
 {
-    public class CreateCommentCommandValidator : AbstractValidator<CreateCommentResponse> { }
+    public class CreateCommentCommandValidator : AbstractValidator<CreateCommentCommand> { }
 
 
 
