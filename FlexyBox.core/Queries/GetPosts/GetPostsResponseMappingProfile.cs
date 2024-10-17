@@ -17,8 +17,7 @@ namespace FlexyBox.core.Queries.GetPosts
                 .ForMember(dest => dest.ContentKey, opt => opt.MapFrom(src => src.ContentKey))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.Image, opt => opt.Ignore())
-                .ForMember(dest => dest.Content, opt => opt.Ignore())
-                .ForMember(dest => dest.ContentKey, opt => opt.Ignore());
+                .ForMember(dest => dest.Content, opt => opt.Ignore());
 
         }
     }
