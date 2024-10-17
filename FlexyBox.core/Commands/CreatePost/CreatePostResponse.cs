@@ -5,12 +5,12 @@ namespace FlexyBox.core.Commands.CreatePost
 {
     public class CreatePostResponse
     {
-        public DateTime LastEdited { get; internal set; }
-        public string Title { get; internal set; }
-        public IEnumerable<string> Tags { get; internal set; }
-        public string CategoryName { get; internal set; }
-        public int Id { get; internal set; }
-        public string Content { get; internal set; }
+        public DateTime LastEdited { get; set; }
+        public string Title { get; set; }
+        public IEnumerable<string> Tags { get; set; }
+        public string CategoryName { get; set; }
+        public int Id { get; set; }
+        public string Content { get; set; }
     }
 
     public class CreatePostResponseMappingProfile : Profile

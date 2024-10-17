@@ -15,7 +15,7 @@ namespace FlexyBox.core.Commands.CreatePost
 
         public int CategoryId { get; set; }
 
-        // Change from IBrowserFile to byte[]
+
         public byte[] Image { get; set; }
 
         public CreatePostCommand() { }

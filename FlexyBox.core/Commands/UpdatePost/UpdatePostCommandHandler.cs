@@ -1,12 +1,74 @@
-﻿using FlexyBox.core.Shared;
+﻿using AutoMapper;
+using FlexyBox.core.Services.ContentStorage;
+using FlexyBox.core.Shared;
+using FlexyBox.dal.Generic;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace FlexyBox.core.Commands.CreateComment
 {
-    public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, UpdatePostResponse>
+    public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand, int>
     {
-        public Task<UpdatePostResponse> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IContentStorage _contentStorage;
+        private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public UpdatePostCommandHandler(IUnitOfWork unitOfWork, IContentStorage contentStorage, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
-            throw new NotImplementedException();
+            _unitOfWork = unitOfWork;
+            _contentStorage = contentStorage;
+            _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+        }
+        public async Task<int> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
+        {
+            var post = await _unitOfWork.Posts.GetPostWithDetails(request.Id);
+            if (post == null)
+            {
+                throw new UnauthorizedAccessException("No Post available.");
+            }
+
+            var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (post.UserId != userIdClaim.Value)
+            {
+                throw new UnauthorizedAccessException("User is not authenticated.");
+            }
+
+            var currentTags = post.Tags.ToList();
+
+            var newTags = request.Tags;
+
+            foreach (var tag in currentTags)
+            {
+                if (!newTags.Contains(tag.Id))
+                {
+                    post.Tags.Remove(tag);
+                }
+            }
+
+            foreach (var tagId in newTags)
+            {
+                if (!post.Tags.Any(t => t.Id == tagId))
+                {
+                    var tag = await _unitOfWork.Tags.SingleOrDefaultAsync(x => x.Id == tagId);
+                    if (tag != null)
+                    {
+                        post.Tags.Add(tag);
+                    }
+                }
+            }
+
+            var category = await _unitOfWork.Categories.SingleOrDefaultAsync(x => x.Id == request.CategoryId);
+            post.Category = category;
+
+            await _contentStorage.AddImageByIdAsync(request.Image, post.ContentKey);
+            await _contentStorage.AddStringByIdAsync(request.Content, post.ContentKey);
+
+            await _unitOfWork.CompleteAsync();
+
+            return post.Id;
         }
     }
 }
