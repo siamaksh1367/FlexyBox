@@ -22,15 +22,51 @@ public class HttpRequestBuilder
     }
     public async Task<T> ExecuteAsync<T>()
     {
-        var result = await _httpClient.SendAsync(_httpRequestMessage);
-        var response = result.EnsureSuccessStatusCode();
-        var responseObject = await response.Content.ReadFromJsonAsync<T>();
+        HttpResponseMessage result;
+
+        try
+        {
+            result = await _httpClient.SendAsync(_httpRequestMessage);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Connection failed: " + ex.Message, ex);
+        }
+
+        switch (result.StatusCode)
+        {
+            case System.Net.HttpStatusCode.OK:
+                break;
+
+            case System.Net.HttpStatusCode.Unauthorized:
+                throw new Exception("You are not authorized to access this resource.");
+
+            case System.Net.HttpStatusCode.Forbidden:
+                throw new Exception("You do not have permission to access this resource.");
+
+            case System.Net.HttpStatusCode.NotFound:
+                throw new Exception("The requested resource was not found.");
+
+            case System.Net.HttpStatusCode.BadRequest:
+                throw new Exception("The request was invalid. Please check your input.");
+
+            case System.Net.HttpStatusCode.InternalServerError:
+                throw new Exception("An internal server error occurred. Please try again later.");
+
+            default:
+                throw new Exception($"An unexpected error occurred. Status code: {result.StatusCode} - {result.ReasonPhrase}");
+        }
+
+        var responseObject = await result.Content.ReadFromJsonAsync<T>();
+
         _httpRequestMessage = new HttpRequestMessage
         {
             RequestUri = _url
         };
+
         return responseObject;
     }
+
     public HttpRequestBuilder AddUserAgent(string userAgent)
     {
         _httpRequestMessage.Headers.UserAgent.ParseAdd(userAgent);
