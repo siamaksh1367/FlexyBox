@@ -60,6 +60,7 @@ namespace FlexyBox.core.Commands.CreateComment
                 }
             }
 
+            post.Title = request.Title;
             var category = await _unitOfWork.Categories.SingleOrDefaultAsync(x => x.Id == request.CategoryId);
             post.Category = category;
 
