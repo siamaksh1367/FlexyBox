@@ -6,7 +6,7 @@
 
         public FileContentStorage()
         {
-            _storagePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "volume", "content");
+            _storagePath = Path.Combine(Directory.GetCurrentDirectory(), "volume", "content");
             if (!Directory.Exists(_storagePath))
             {
                 Directory.CreateDirectory(_storagePath);
