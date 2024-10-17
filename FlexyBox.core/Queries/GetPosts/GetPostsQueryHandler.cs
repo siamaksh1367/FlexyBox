@@ -10,14 +10,16 @@ namespace FlexyBox.core.Queries.GetPosts
     public sealed class GetPostsQueryHandler : IQueryHandler<GetPostsQuery, WithCount<GetPostResponse>>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
         private readonly IContentStorage _contentStorage;
+        private readonly IMapper _mapper;
+        private readonly IUserInfo _userInfo;
 
-        public GetPostsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IContentStorage contentStorage)
+        public GetPostsQueryHandler(IUnitOfWork unitOfWork, IContentStorage contentStorage, IMapper mapper, IUserInfo userInfo)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
             _contentStorage = contentStorage;
+            _mapper = mapper;
+            _userInfo = userInfo;
         }
 
         public async Task<WithCount<GetPostResponse>> Handle(GetPostsQuery request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace FlexyBox.core.Queries.GetPosts
                 var response = _mapper.Map<GetPostResponse>(post);
                 response.Content = await _contentStorage.GetFileByIdAsync(post.ContentKey);
                 response.Image = await _contentStorage.GetImageByIdAsync(post.ContentKey);
+                response.UserName = _userInfo.GetUserId();
                 responses.Response.Add(response);
+
             }
             responses.Count = posts.Count;
             return responses;

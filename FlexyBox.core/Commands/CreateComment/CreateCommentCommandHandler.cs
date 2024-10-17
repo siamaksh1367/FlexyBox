@@ -4,8 +4,6 @@ using FlexyBox.core.Services.ContentStorage;
 using FlexyBox.core.Shared;
 using FlexyBox.dal.Generic;
 using FlexyBox.dal.Models;
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 
 namespace FlexyBox.core.Commands.CreateComment
 {
@@ -14,14 +12,14 @@ namespace FlexyBox.core.Commands.CreateComment
         private readonly IUnitOfWork _unitOfWork;
         private readonly IContentStorage _contentStorage;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserInfo _userInfo;
 
-        public CreateCommentCommandHandler(IUnitOfWork unitOfWork, IContentStorage contentStorage, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public CreateCommentCommandHandler(IUnitOfWork unitOfWork, IContentStorage contentStorage, IMapper mapper, IUserInfo userInfo)
         {
             _unitOfWork = unitOfWork;
             _contentStorage = contentStorage;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
+            _userInfo = userInfo;
         }
         public async Task<GetCommentResponse> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
         {
@@ -29,15 +27,7 @@ namespace FlexyBox.core.Commands.CreateComment
 
             comment.PostId = request.PostId;
             comment.Content = request.Content;
-            var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim != null)
-            {
-                comment.UserId = userIdClaim.Value;
-            }
-            else
-            {
-                throw new UnauthorizedAccessException("User is not authenticated.");
-            }
+            comment.UserId = _userInfo.GetUserId();
             comment.Created = DateTime.UtcNow;
             var createdComment = await _unitOfWork.Comments.AddAsync(comment);
             await _unitOfWork.CompleteAsync();

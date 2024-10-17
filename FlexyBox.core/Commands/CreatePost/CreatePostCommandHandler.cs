@@ -3,8 +3,6 @@ using FlexyBox.core.Services.ContentStorage;
 using FlexyBox.core.Shared;
 using FlexyBox.dal.Generic;
 using FlexyBox.dal.Models;
-using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 
 namespace FlexyBox.core.Commands.CreatePost
 {
@@ -13,14 +11,14 @@ namespace FlexyBox.core.Commands.CreatePost
         private readonly IUnitOfWork _unitOfWork;
         private readonly IContentStorage _contentStorage;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IUserInfo _userInfo;
 
-        public CreatePostCommandHandler(IUnitOfWork unitOfWork, IContentStorage contentStorage, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public CreatePostCommandHandler(IUnitOfWork unitOfWork, IContentStorage contentStorage, IMapper mapper, IUserInfo userInfo)
         {
             _unitOfWork = unitOfWork;
             _contentStorage = contentStorage;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
+            _userInfo = userInfo;
         }
         public async Task<CreatePostResponse> Handle(CreatePostCommand request, CancellationToken cancellationToken)
         {
@@ -39,15 +37,7 @@ namespace FlexyBox.core.Commands.CreatePost
 
             post.Category = category;
 
-            var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim != null)
-            {
-                post.UserId = userIdClaim.Value;
-            }
-            else
-            {
-                throw new UnauthorizedAccessException("User is not authenticated.");
-            }
+            post.UserId = _userInfo.GetUserId();
             await _contentStorage.AddImageByIdAsync(request.Image, post.ContentKey);
             await _contentStorage.AddStringByIdAsync(request.Content, post.ContentKey);
 
