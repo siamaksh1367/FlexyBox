@@ -11,7 +11,6 @@ public class HttpRequestBuilder
     public HttpRequestBuilder(IHttpClientFactory httpClientFactory)
     {
         _httpClient = httpClientFactory.CreateClient("FlexyBox");
-        Console.WriteLine(_httpClient.BaseAddress);
         _httpRequestMessage = new HttpRequestMessage();
     }
     internal HttpRequestBuilder SetJsonContent<T>(T content)
