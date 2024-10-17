@@ -10,23 +10,21 @@ namespace FlexyBox.core.Queries.GetPost
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IContentStorage _contentStorage;
-        private readonly IUserInfo _userInfo;
 
-        public GetPostQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IContentStorage contentStorage, IUserInfo userInfo)
+        public GetPostQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IContentStorage contentStorage)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _contentStorage = contentStorage;
-            _userInfo = userInfo;
         }
 
         public async Task<GetPostResponse> Handle(GetPostQuery request, CancellationToken cancellationToken)
         {
             var post = await _unitOfWork.Posts.GetPostWithDetails(request.Id);
             var response = _mapper.Map<GetPostResponse>(post);
-            response.Content = await _contentStorage.GetFileByIdAsync(response.ContentKey);
-            response.Image = await _contentStorage.GetImageByIdAsync(response.ContentKey);
-            response.UserName = _userInfo.GetUserId();
+            response.Content = await _contentStorage.GetFileByIdAsync(post.ContentKey);
+            response.Image = await _contentStorage.GetImageByIdAsync(post.ContentKey);
+            response.UserName = post.UserId;
             return response;
         }
     }
