@@ -24,7 +24,6 @@ namespace FlexyBox.core.Commands.CreateComment
         public async Task<GetCommentResponse> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
         {
             var comment = new Comment();
-
             comment.PostId = request.PostId;
             comment.Content = request.Content;
             comment.UserId = _userInfo.GetUserId();

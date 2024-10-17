@@ -32,7 +32,6 @@ namespace FlexyBox.core.Queries.GetPosts
                 var response = _mapper.Map<GetPostResponse>(post);
                 response.Content = await _contentStorage.GetFileByIdAsync(post.ContentKey);
                 response.Image = await _contentStorage.GetImageByIdAsync(post.ContentKey);
-                response.UserName = _userInfo.GetUserId();
                 responses.Response.Add(response);
 
             }

@@ -26,7 +26,7 @@ namespace FlexyBox.core.Services.ContentStorage
             }
             else
             {
-                throw new UnauthorizedAccessException("User is not authenticated.");
+                return string.Empty;
             }
         }
     }
