@@ -28,7 +28,6 @@ namespace FlexyBox.core.Commands.CreateComment
             {
                 throw new UnauthorizedAccessException("No Post available.");
             }
-
             var userIdClaim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
 
             if (post.UserId != userIdClaim.Value)
@@ -63,6 +62,11 @@ namespace FlexyBox.core.Commands.CreateComment
             post.Title = request.Title;
             var category = await _unitOfWork.Categories.SingleOrDefaultAsync(x => x.Id == request.CategoryId);
             post.Category = category;
+
+            if (post.ContentKey == Guid.Empty)
+            {
+                post.ContentKey = new Guid();
+            }
 
             await _contentStorage.AddImageByIdAsync(request.Image, post.ContentKey);
             await _contentStorage.AddStringByIdAsync(request.Content, post.ContentKey);
