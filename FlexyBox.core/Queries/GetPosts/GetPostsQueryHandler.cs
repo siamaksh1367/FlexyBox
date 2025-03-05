@@ -34,7 +34,6 @@ namespace FlexyBox.core.Queries.GetPosts
                 response.Image = await _contentStorage.GetImageByIdAsync(post.ContentKey);
                 response.UserName = post.UserId;
                 responses.Response.Add(response);
-
             }
             responses.Count = posts.Count;
             return responses;

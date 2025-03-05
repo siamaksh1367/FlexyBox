@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
 using FlexyBox.common;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -9,6 +10,7 @@ namespace FlexyBox.core.Services.ContentStorage
     public class ContentBlobStorage : IContentStorage
     {
         private const string BlobContainerName = "content";
+        private const string QueueName = "vestas";
         private readonly IOptions<StorageConnectionString> _option;
         private readonly ILogger<ContentBlobStorage> _logger;
 
@@ -42,6 +44,15 @@ namespace FlexyBox.core.Services.ContentStorage
                 _logger.LogError($"An error occurred while uploading the image: {ex.Message}");
                 throw;
             }
+        }
+
+        public async Task AddMessageToQueuessync(string content)
+        {
+            QueueClient queueClient = new QueueClient(_option.Value.ConnectionString, QueueName);
+
+            await queueClient.CreateIfNotExistsAsync();
+
+            await queueClient.SendMessageAsync(content);
         }
 
         public async Task AddStringByIdAsync(string content, Guid identifier)
