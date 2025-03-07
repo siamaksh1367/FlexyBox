@@ -47,8 +47,6 @@ services:
     ports:
       - "7203:8080"
       - "7204:443"
-    volumes:
-      - ./cert.pfx:/app/cert.pfx               
     networks:
       - app-network
 
