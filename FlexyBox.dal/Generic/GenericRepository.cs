@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 
 namespace FlexyBox.dal.Generic
 {
+    //comment
     public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _context;

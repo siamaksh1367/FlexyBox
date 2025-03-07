@@ -3,6 +3,7 @@ using FlexyBox.core.Queries.GetComments;
 
 namespace FlexyBox.contract.Services
 {
+    //comment
     public interface ICommentService
     {
         HttpRequestBuilder GetCommentsForPost(GetCommentsQuery getCommentsQuery);

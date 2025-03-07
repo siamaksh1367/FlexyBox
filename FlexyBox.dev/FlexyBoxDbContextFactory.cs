@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace FlexyBox.dev
 {
+    //comment
     public class FlexyBoxDbContextFactory : IDesignTimeDbContextFactory<FlexyBoxDB>
     {
         public FlexyBoxDB CreateDbContext(string[] args)

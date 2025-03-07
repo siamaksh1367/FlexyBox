@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FlexyBox.core.Commands.CreateCategory
 {
+    //comment
     public class CreateCategoryCommand : ICommand<CreateCategoryResponse>
     {
         [Required(ErrorMessage = "Name is required.")]
