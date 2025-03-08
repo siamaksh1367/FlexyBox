@@ -72,11 +72,11 @@ services:
       - "7125:80"  
       - "443:443"  
     volumes:
+      - ./generate-cert.sh:/generate-cert.sh
       - ./FlexyBox.web/nginx.conf:/etc/nginx/nginx.conf
-      - ./cert.pem:/etc/ssl/certs/cert.pem
-      - ./key.pem:/etc/ssl/private/key.pem
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+    command: ["/bin/sh", "-c", "chmod +x /generate-cert.sh && /generate-cert.sh"]
     depends_on:
       - api
     networks:
