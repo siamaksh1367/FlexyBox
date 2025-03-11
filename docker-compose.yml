@@ -41,7 +41,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:8080
       - SQLConnectionString__ConnectionString=Server=sqlserver,1433;Database=FlexyBoxDB;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True
-      - StorageConnectionString__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
+      - StorageConnectionString__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8VDm1y4A7m3ddw7ksFw8e6d4fXk0QF1a7OniL24mnqaLv0t79z+2z+RbZZ8F2wT9HV20Z0XowEgfqgD6F5A==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;
       - OktaServer__Authority=https://dev-uct7p4or1fa0cwym.us.auth0.com/
       - OktaServer__Audience=https://localhost:7204/
     ports:
@@ -59,6 +59,8 @@ services:
     command: "azurite --loose -l /data --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0"
     ports:
        - '10000:10000'
+       - '10001:10001'
+       - '10002:10002'
     networks:
       - app-network
     depends_on:
@@ -80,23 +82,23 @@ services:
       - api
     restart: always
 
-  # addtoqueue:
-  #   build:
-  #     context: .
-  #     dockerfile: AddToQueue/Dockerfile
-  #   ports:
-  #     - "8081:8080"
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - StorageConnectionString__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
-  #     - AzureWebJobsScriptRoot=/home/site/wwwroot
-  #     - AzureFunctionsJobHost__Logging__Console__IsEnabled=true
-  #   volumes:
-  #     - ./volume/azurtie:/home/site/wwwroot
-  #   depends_on:
-  #     - api    
-  #   networks:
-  #     - app-network
+  addtoqueue:
+    build:
+      context: .
+      dockerfile: AddToQueue/Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - StorageConnectionString__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8VDm1y4A7m3ddw7ksFw8e6d4fXk0QF1a7OniL24mnqaLv0t79z+2z+RbZZ8F2wT9HV20Z0XowEgfqgD6F5A==;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;"
+      - AzureWebJobsScriptRoot=/home/site/wwwroot
+      - AzureFunctionsJobHost__Logging__Console__IsEnabled=true
+    volumes:
+      - ./volume/azurtie:/home/site/wwwroot
+    depends_on:
+      - api    
+    networks:
+      - app-network
   
   # readfromqueue:
   #   build:

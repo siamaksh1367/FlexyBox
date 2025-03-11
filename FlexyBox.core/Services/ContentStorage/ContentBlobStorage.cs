@@ -48,11 +48,19 @@ namespace FlexyBox.core.Services.ContentStorage
 
         public async Task AddMessageToQueuessync(string content)
         {
-            QueueClient queueClient = new QueueClient(_option.Value.ConnectionString, QueueName);
+            try
+            {
+                QueueClient queueClient = new QueueClient(_option.Value.ConnectionString, QueueName);
 
-            await queueClient.CreateIfNotExistsAsync();
+                await queueClient.CreateIfNotExistsAsync();
 
-            await queueClient.SendMessageAsync(content);
+                await queueClient.SendMessageAsync(content);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
         }
 
         public async Task AddStringByIdAsync(string content, Guid identifier)
