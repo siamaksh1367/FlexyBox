@@ -58,7 +58,6 @@ namespace FlexyBox.core.Services.ContentStorage
             }
             catch (Exception e)
             {
-
                 Console.WriteLine(e.Message);
             }
         }
