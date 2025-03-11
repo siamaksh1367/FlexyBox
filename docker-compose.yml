@@ -36,8 +36,8 @@ services:
     depends_on:
       - sqlserver
     environment:
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass123
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/cert.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=MyPass1234
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/aspnetapp.pfx
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:8080
       - SQLConnectionString__ConnectionString=Server=sqlserver,1433;Database=FlexyBoxDB;User Id=sa;Password=yourStrong(!)Password;TrustServerCertificate=True
@@ -67,20 +67,17 @@ services:
   web:
     build:
       context: .
-      dockerfile: FlexyBox.web/Dockerfile
+      dockerfile: BlazorApp/Dockerfile  # Path to your Blazor app's Dockerfile
     ports:
-      - "7125:80"  
-      - "443:443"  
+      - "7125:80"  # Expose the Blazor app on the desired port
+      - "443:443"  # Expose HTTPS as well
     volumes:
-      - ./generate-cert.sh:/generate-cert.sh
-      - ./FlexyBox.web/nginx.conf:/etc/nginx/nginx.conf
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-    command: ["/bin/sh", "-c", "chmod +x /generate-cert.sh && /generate-cert.sh"]
-    depends_on:
-      - api
+      - ./cert.pem:/etc/ssl/certs/cert.pem
+      - ./key.pem:/etc/ssl/private/key.pem
     networks:
       - app-network
+    depends_on:
+      - api
     restart: always
 
   # addtoqueue:
